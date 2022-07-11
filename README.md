@@ -21,16 +21,33 @@ sudo apt install git
 ```
 
 ### Installation
+
 ```sh
-git clone https://github.com/DamionGans/ubuntu-wsl2-systemd-script.git ~/ubuntu-wsl2-systemd-script
+git clone https://github.com/feiskyer/ubuntu-wsl2-systemd-script.git ~/ubuntu-wsl2-systemd-script
 cd ~/ubuntu-wsl2-systemd-script
 bash install.sh (--force) (--no-wslg)
 
 # Enter your password and wait until the script has finished.
 ```
 
+### Enable cgroupv2
+
+```sh
+echo "kernelCommandLine=systemd.unified_cgroup_hierarchy=1 cgroup_no_v1=all" | sudo tee  -a /etc/wsl.config
+echo "cgroup2 /sys/fs/cgroup cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate 0 0" | sudo tee -a /etc/fstab
+```
+
 ### Restart your ubuntu shell | WSL2 environment.
+
+```powershell
+wsl --shutdown
+wsl
+```
+
+Run `start-systemd-namespace` if the systemd process is not started automatically.
+
 ### Testing
+
 ```sh
 systemctl
 ```
